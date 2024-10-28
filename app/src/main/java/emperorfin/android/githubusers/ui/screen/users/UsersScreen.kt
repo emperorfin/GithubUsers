@@ -190,7 +190,7 @@ private fun Content(
 //                                return@UserListItem
 //                            }
 
-                            navigationActions?.navigateToUserDetailsScreen(it.toString())
+                            navigationActions?.navigateToUserDetailsScreen(it)
 
                             Toast.makeText(
                                 context,

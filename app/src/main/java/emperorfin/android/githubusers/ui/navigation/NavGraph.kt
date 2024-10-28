@@ -15,6 +15,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import emperorfin.android.githubusers.ui.navigation.Destinations.ROUTE_USERS
 import emperorfin.android.githubusers.ui.navigation.Destinations.ROUTE_USER_DETAILS
 import emperorfin.android.githubusers.ui.navigation.ScreenArgs.SCREEN_USER_DETAILS_ID
+import emperorfin.android.githubusers.ui.screen.userdetails.UserDetailsScreen
 import emperorfin.android.githubusers.ui.screen.users.UsersScreen
 
 
@@ -56,12 +57,13 @@ fun NavGraph(
                 )
             ) { backStackEntry ->
 
+//                val userId: Long = backStackEntry.arguments?.getLong(SCREEN_USER_DETAILS_ID)!!
                 val userId: String = backStackEntry.arguments?.getString(SCREEN_USER_DETAILS_ID)!!
 
-//                UserDetailsScreen(
-//                    navigationActions = navActions,
-//                    userId = userId,
-//                )
+                UserDetailsScreen(
+                    navigationActions = navActions,
+                    userId = userId.toLong(),
+                )
             }
         }
     }

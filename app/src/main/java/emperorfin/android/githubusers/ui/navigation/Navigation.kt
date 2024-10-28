@@ -47,7 +47,7 @@ class NavigationActions(private val navController: NavHostController) {
     /**
      * args: "{id}"
      */
-    fun navigateToUserDetailsScreen(args: String) {
+    fun navigateToUserDetailsScreen(args: Long) {//String
 
         val routeWithArgs = "${ROUTE_USER_DETAILS}/$args"
 

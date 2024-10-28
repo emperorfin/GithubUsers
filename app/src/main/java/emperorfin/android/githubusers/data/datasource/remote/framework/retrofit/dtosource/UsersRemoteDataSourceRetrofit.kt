@@ -117,7 +117,7 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
                 return@withContext try {
 
                     val response: Response<UserDetailsResponse> = usersDao.getRemoteUser(
-                        userId = params.id!!,
+                        userId = params.id,
                     )
 
                     withContext(mainDispatcher){

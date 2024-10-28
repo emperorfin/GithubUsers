@@ -2,6 +2,7 @@
     <string name="app_name">Github Users</string>
 
     <string name="btn_retry">Retry</string>
+    <string name="heading_repos">Repos</string>
     <string name="content_description_error_message">Error message</string>
     <string name="content_description_search_leading_icon">Search Icon</string>
     <string name="label_search_users">Search users</string>

@@ -38,7 +38,7 @@ fun AppBarWithArrow(
     onBackPress: () -> Unit
 ) {
     TopAppBar(
-        modifier = Modifier.height(58.dp),
+        modifier = Modifier.height(70.dp),
         title = {
             Box {
                 Text(
