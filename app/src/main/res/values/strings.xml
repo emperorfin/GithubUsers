@@ -1,3 +1,60 @@
 <resources>
     <string name="app_name">Github Users</string>
+
+    <string name="error_memory_user_list_not_available">User list not available memory error.</string>
+    <string name="error_local_user_list_not_available">User list not available local error.</string>
+    <string name="error_remote_user_list_not_available">User list not available remote error.</string>
+    <string name="error_memory_user">User memory error.</string>
+    <string name="error_local_user">User local error.</string>
+    <string name="error_remote_user">User remote error.</string>
+    <string name="error_memory_get_user">Get user memory error.</string>
+    <string name="error_local_get_user">Get user local error.</string>
+    <string name="error_remote_get_user">Get user remote error.</string>
+    <string name="error_memory_insert_user">Insert user memory error.</string>
+    <string name="error_local_insert_user">Insert user local error.</string>
+    <string name="error_remote_insert_user">Insert user remote error.</string>
+    <string name="error_memory_update_user">Update user memory error.</string>
+    <string name="error_local_update_user">Update user local error.</string>
+    <string name="error_remote_update_user">Update user remote error.</string>
+    <string name="error_memory_delete_user">Delete user memory error.</string>
+    <string name="error_local_delete_user">Delete user local error.</string>
+    <string name="error_remote_delete_user">Delete user remote error.</string>
+    <string name="error_memory_non_existent_user_data">Non existent user data memory error.</string>
+    <string name="error_local_non_existent_user_data">Non existent user data local error.</string>
+    <string name="error_remote_non_existent_user_data">Non existent user data remote error.</string>
+    <string name="error_repository_get_user">Get user repository error.</string>
+    <string name="error_repository_insert_user">Insert user repository error.</string>
+    <string name="error_repository_delete_user">Delete user repository error.</string>
+    <string name="error_cant_force_refresh_users_remote_data_source_unavailable">Can\'t force users refresh. Remote data source is unavailable.</string>
+
+    <string name="error_memory_repo_list_not_available">Repo list not available memory error.</string>
+    <string name="error_local_repo_list_not_available">Repo list not available local error.</string>
+    <string name="error_remote_repo_list_not_available">Repo list not available remote error.</string>
+    <string name="error_memory_repo">Repo memory error.</string>
+    <string name="error_local_repo">Repo local error.</string>
+    <string name="error_remote_repo">Repo remote error.</string>
+    <string name="error_memory_get_repo">Get repo memory error.</string>
+    <string name="error_local_get_repo">Get repo local error.</string>
+    <string name="error_remote_get_repo">Get repo remote error.</string>
+    <string name="error_memory_insert_repo">Insert repo memory error.</string>
+    <string name="error_local_insert_repo">Insert repo local error.</string>
+    <string name="error_remote_insert_repo">Insert repo remote error.</string>
+    <string name="error_memory_update_repo">Update repo memory error.</string>
+    <string name="error_local_update_repo">Update repo local error.</string>
+    <string name="error_remote_update_repo">Update repo remote error.</string>
+    <string name="error_memory_delete_repo">Delete repo memory error.</string>
+    <string name="error_local_delete_repo">Delete repo local error.</string>
+    <string name="error_remote_delete_repo">Delete repo remote error.</string>
+    <string name="error_memory_non_existent_repo_data">Non existent repo data memory error.</string>
+    <string name="error_local_non_existent_repo_data">Non existent repo data local error.</string>
+    <string name="error_remote_non_existent_repo_data">Non existent repo data remote error.</string>
+    <string name="error_repository_get_repo">Get repo repository error.</string>
+    <string name="error_repository_insert_repo">Insert repo repository error.</string>
+    <string name="error_repository_delete_repo">Delete repo repository error.</string>
+    <string name="error_cant_force_refresh_repos_remote_data_source_unavailable">Can\'t force repos refresh. Remote data source is unavailable.</string>
+
+    <string name="exception_occurred_local">Local exception occurred.</string>
+    <string name="exception_occurred_remote">Remote exception occurred.</string>
+    <string name="error_fetching_from_remote_and_local">Error fetching from remote and local.</string>
+
 </resources>

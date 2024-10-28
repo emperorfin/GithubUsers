@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,11 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.dagger.hilt.android)
 }
+
+val properties = Properties().apply {
+    rootProject.file("local.properties").reader().use(::load)
+}
+val propGitHubApiKey = properties["github.apikey"] as String
 
 android {
     namespace = "emperorfin.android.githubusers"
@@ -19,6 +26,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GITHUB_BASE_URL", "\"https://api.github.com\"") // TODO: May be this should be in the local.properties file.
+        buildConfigField("String", "GITHUB_API_KEY", propGitHubApiKey)
     }
 
     buildTypes {
@@ -39,6 +49,8 @@ android {
     }
     buildFeatures {
         compose = true
+
+        buildConfig = true
     }
 }
 
