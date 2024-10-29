@@ -1,6 +1,8 @@
 package emperorfin.android.githubusers.ui.screen.userdetails
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
 import com.skydoves.landscapist.CircularReveal
@@ -115,7 +118,8 @@ fun UserDetailsScreen(
             userId = userId,
             user = user,
             viewModel = viewModel,
-            uiState = uiState
+            uiState = uiState,
+            context = context
         )
 
         // Check for SnackBar messages to display on the screen
@@ -132,6 +136,7 @@ fun UserDetailsScreen(
 
 @Composable
 private fun Content(
+    context: Context,
     modifier: Modifier,
     userId: Long,
     user: UserUiModel?,
@@ -175,7 +180,7 @@ private fun Content(
 
                 Header(it)
 
-                UserRepos(user = it, repos = uiState.repos)
+                UserRepos(context = context, user = it, repos = uiState.repos)
 
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -275,6 +280,7 @@ private fun FollowCount(text: String) {
 
 @Composable
 private fun UserRepos(
+    context: Context,
     user: UserUiModel,
     repos: List<RepoUiModel>
 ) {
@@ -298,11 +304,22 @@ private fun UserRepos(
         repos.let {
             if (it.isNotEmpty()) {
                 Column {
+
                     for (repo in it) {
                         UserRepoListItem(
                             modifier = Modifier.fillMaxWidth(),
                             repo = repo,
-                            onClicked = { }
+                            onClicked = { _repo ->
+
+                                var repoUrl: String = _repo.htmlUrl
+
+                                if (!repoUrl.startsWith("http://") && !repoUrl.startsWith("https://")) {
+                                    repoUrl = "http://$repoUrl"
+                                }
+
+                                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(repoUrl))
+                                context.startActivity(browserIntent)
+                            }
                         )
                         HorizontalDivider()
                     }

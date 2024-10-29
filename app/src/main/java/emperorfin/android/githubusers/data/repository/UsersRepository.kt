@@ -196,9 +196,10 @@ data class UsersRepository @Inject constructor(
             }
 
             (newRepos as? ResultData.Success)?.let {
-                if (it.data.isNotEmpty()) { // it.data.isEmpty()
-                    return@withContext ResultData.Success(it.data)
-                }
+//                if (it.data.isNotEmpty()) { // it.data.isEmpty()
+//                    return@withContext ResultData.Success(it.data)
+//                }
+                return@withContext ResultData.Success(it.data)
             }
 
             return@withContext newRepos as ResultData.Error
