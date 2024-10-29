@@ -1,7 +1,31 @@
 # GitHubUsers
 
-GitHubUsers is a native Android app project that uses [GitHub webservice REST API](https://api.github.com/) to
-allow a user search for for GitHub users and view the details of each user and their repos.
+GitHubUsers is a native Android app project that uses [GitHub REST API](https://api.github.com/) to
+allow the app user search for GitHub users and view the details of each user and their repos. When 
+the app user taps on a GitHub user's repo from the user details screen, the web page at the repo 
+URL would open and display in a web browser.
+
+When the app user views the details of a GitHub user, the app user could scroll through the list of 
+previously visited GitHub users from the GitHub Users list screen if no internet connectivity. But 
+an internet connectivity would be required in order to re-view the details of the previously viewed 
+GitHub users.
+
+## Project Tech-stack and Characteristics
+
+* Android SDK
+* Kotlin
+* Jetpack Compose
+* Material Design 3 Components
+* ViewModel
+* Kotlin Coroutine
+* StateFlow
+* MVVM Design Pattern
+* Repository Pattern
+* Navigation
+* Offline Storage (via Room)
+* Retrofit
+* [GitHub REST API](https://api.github.com/)
+* Dependency Injection (via Hilt)
 
 ## Getting Started
 
