@@ -2,7 +2,7 @@ package emperorfin.android.githubusers.ui.screen.userdetails
 
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -29,9 +30,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +48,8 @@ import emperorfin.android.githubusers.ui.component.ContentLoader
 import emperorfin.android.githubusers.ui.component.EmptyContent
 import emperorfin.android.githubusers.ui.component.LoadingIndicator
 import emperorfin.android.githubusers.ui.component.NetworkImage
+import emperorfin.android.githubusers.ui.component.UserRepoListItem
+import emperorfin.android.githubusers.ui.model.repo.RepoUiModel
 import emperorfin.android.githubusers.ui.model.user.UserUiModel
 import emperorfin.android.githubusers.ui.navigation.NavigationActions
 import emperorfin.android.githubusers.ui.screen.userdetails.stateholder.UserDetailsUiState
@@ -88,7 +91,13 @@ fun UserDetailsScreen(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         topBar = {
 
-            val userName: String = (user?.name ?: user?.login).toString()
+            var userName = ""
+
+            if (user != null) {
+                userName = user.name.ifEmpty {
+                    user.login
+                }
+            }
 
             AppBarWithArrow(
                 title = userName,
@@ -98,6 +107,7 @@ fun UserDetailsScreen(
             )
         },
         modifier = modifier.fillMaxSize(),
+        containerColor = background
     ) { paddingValues ->
 
         Content(
@@ -165,7 +175,7 @@ private fun Content(
 
                 Header(it)
 
-                UserRepos(it)
+                UserRepos(user = it, repos = uiState.repos)
 
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -233,9 +243,9 @@ private fun Header(
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally),
         ) {
-            Count("Followers: ${user.followers}")
+            FollowCount("Followers: ${user.followers}")
 
-            Count("Following: ${user.following}")
+            FollowCount("Following: ${user.following}")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -244,7 +254,7 @@ private fun Header(
 }
 
 @Composable
-private fun Count(text: String) {
+private fun FollowCount(text: String) {
     Surface(
         shape = RoundedCornerShape(32.dp),
         shadowElevation = 8.dp,
@@ -265,7 +275,8 @@ private fun Count(text: String) {
 
 @Composable
 private fun UserRepos(
-    user: UserUiModel
+    user: UserUiModel,
+    repos: List<RepoUiModel>
 ) {
 
     Column {
@@ -283,6 +294,41 @@ private fun UserRepos(
                 .fillMaxWidth()
                 .padding(horizontal = 15.dp)
         )
+
+        repos.let {
+            if (it.isNotEmpty()) {
+                Column {
+                    for (repo in it) {
+                        UserRepoListItem(
+                            modifier = Modifier.fillMaxWidth(),
+                            repo = repo,
+                            onClicked = { }
+                        )
+                        HorizontalDivider()
+                    }
+                }
+
+            } else {
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 15.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.message_no_repos),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+            }
+
+        }
 
     }
 }

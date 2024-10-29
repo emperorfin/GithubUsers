@@ -184,19 +184,15 @@ private fun Content(
                         user = user,
                         onClick = {
 
-//                            if (!hasInternetConnection(context.applicationContext as Application)){
-//                                Toast.makeText(context, R.string.message_no_internet_connectivity, Toast.LENGTH_SHORT).show()
-//
-//                                return@UserListItem
-//                            }
+                            // TODO: Remove this restriction once the app user could view GitHub user details offline.
+                            if (!hasInternetConnection(context.applicationContext as Application)){
+                                Toast.makeText(context, R.string.message_no_internet_connectivity, Toast.LENGTH_SHORT).show()
+
+                                return@UserListItem
+                            }
 
                             navigationActions?.navigateToUserDetailsScreen(it)
 
-                            Toast.makeText(
-                                context,
-                                it.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
                     )
                 }

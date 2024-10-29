@@ -94,8 +94,6 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
                             }
                         }
 
-//                        println("HTTP status code: ${response.code()}")
-
                         return@withContext ResultData.Error(failure = UserFailure.GetUserRemoteError())
                     }
 
@@ -132,8 +130,6 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
                             }
                         }
 
-//                        println("HTTP status code: ${response.code()}")
-
                         return@withContext ResultData.Error(failure = UserFailure.GetUserRemoteError())
                     }
 
@@ -167,7 +163,7 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
                 return@withContext try {
 
                     val response: Response<List<Repo>> = usersDao.getRemoteUserRepos(
-                        userId = params.owner?.id!!,
+                        userId = params.owner.id,
                     )
 
                     withContext(mainDispatcher){
@@ -186,8 +182,6 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
                                 return@withContext ResultData.Success(reposModel)
                             }
                         }
-
-//                        println("HTTP status code: ${response.code()}")
 
                         return@withContext ResultData.Error(failure = RepoFailure.GetRepoRemoteError())
                     }
@@ -305,136 +299,141 @@ data class UsersRemoteDataSourceRetrofit @Inject internal constructor(
 
         repos.forEach { repo ->
 
-            val owner: Owner
+            if (!repo.fork!!) {
+                val owner: Owner
 
-            repo.owner.let {
-                owner = Owner(
-                    login = it.login,
-                    id = it.id,
-                    nodeId = it.nodeId,
-                    avatarUrl = it.avatarUrl,
-                    gravatarId = it.gravatarId,
-                    url = it.url,
-                    htmlUrl = it.htmlUrl,
-                    followersUrl = it.followersUrl,
-                    followingUrl = it.followingUrl,
-                    gistsUrl = it.gistsUrl,
-                    starredUrl = it.starredUrl,
-                    subscriptionsUrl = it.subscriptionsUrl,
-                    organizationsUrl = it.organizationsUrl,
-                    reposUrl = it.reposUrl,
-                    eventsUrl = it.eventsUrl,
-                    receivedEventsUrl = it.receivedEventsUrl,
-                    type = it.type,
-                    userViewType = it.userViewType,
-                    siteAdmin = it.siteAdmin,
-                )
-            }
-
-            var permissions: Permissions? = null
-
-            repo.permissions?.let {
-                permissions = Permissions(
-                    admin = it.admin,
-                    maintain = it.maintain,
-                    push = it.push,
-                    triage = it.triage,
-                    pull = it.pull
-                )
-            }
-
-            val topics = mutableListOf<String>()
-
-            repo.topics?.let {
-                it.forEach { topic ->
-                    topics.add(topic)
+                repo.owner.let {
+                    owner = Owner(
+                        login = it.login,
+                        id = it.id,
+                        nodeId = it.nodeId,
+                        avatarUrl = it.avatarUrl,
+                        gravatarId = it.gravatarId,
+                        url = it.url,
+                        htmlUrl = it.htmlUrl,
+                        followersUrl = it.followersUrl,
+                        followingUrl = it.followingUrl,
+                        gistsUrl = it.gistsUrl,
+                        starredUrl = it.starredUrl,
+                        subscriptionsUrl = it.subscriptionsUrl,
+                        organizationsUrl = it.organizationsUrl,
+                        reposUrl = it.reposUrl,
+                        eventsUrl = it.eventsUrl,
+                        receivedEventsUrl = it.receivedEventsUrl,
+                        type = it.type,
+                        userViewType = it.userViewType,
+                        siteAdmin = it.siteAdmin,
+                    )
                 }
+
+                var permissions: Permissions? = null
+
+                repo.permissions?.let {
+                    permissions = Permissions(
+                        admin = it.admin,
+                        maintain = it.maintain,
+                        push = it.push,
+                        triage = it.triage,
+                        pull = it.pull
+                    )
+                }
+
+                val topics = mutableListOf<String>()
+
+                repo.topics?.let {
+                    it.forEach { topic ->
+                        topics.add(topic)
+                    }
+                }
+
+                val repoDto = RepoDataTransferObject.newInstance(
+                    id = repo.id,
+                    nodeId = repo.nodeId,
+                    name = repo.name,
+                    fullName = repo.fullName,
+                    private = repo.private,
+                    owner = owner,
+                    htmlUrl = repo.htmlUrl,
+                    description = repo.description,
+                    fork = repo.fork,
+                    url = repo.url,
+                    forksUrl = repo.forksUrl,
+                    keysUrl = repo.keysUrl,
+                    collaboratorsUrl = repo.collaboratorsUrl,
+                    teamsUrl = repo.teamsUrl,
+                    hooksUrl = repo.hooksUrl,
+                    issueEventsUrl = repo.issuesUrl,
+                    eventsUrl = repo.eventsUrl,
+                    assigneesUrl = repo.assigneesUrl,
+                    branchesUrl = repo.branchesUrl,
+                    tagsUrl = repo.tagsUrl,
+                    blobsUrl = repo.blobsUrl,
+                    gitTagsUrl = repo.gitTagsUrl,
+                    gitRefsUrl = repo.gitRefsUrl,
+                    treesUrl = repo.treesUrl,
+                    statusesUrl = repo.statusesUrl,
+                    languagesUrl = repo.languagesUrl,
+                    stargazersUrl = repo.stargazersUrl,
+                    contributorsUrl = repo.contributorsUrl,
+                    subscribersUrl = repo.subscribersUrl,
+                    subscriptionUrl = repo.subscriptionUrl,
+                    commitsUrl = repo.commitsUrl,
+                    gitCommitsUrl = repo.gitCommitsUrl,
+                    commentsUrl = repo.commentsUrl,
+                    issueCommentUrl = repo.issueCommentUrl,
+                    contentsUrl = repo.contentsUrl,
+                    compareUrl = repo.compareUrl,
+                    mergesUrl = repo.mergesUrl,
+                    archiveUrl = repo.archiveUrl,
+                    downloadsUrl = repo.downloadsUrl,
+                    issuesUrl = repo.issuesUrl,
+                    pullsUrl = repo.pullsUrl,
+                    milestonesUrl = repo.milestonesUrl,
+                    notificationsUrl = repo.notificationsUrl,
+                    labelsUrl = repo.labelsUrl,
+                    releasesUrl = repo.releasesUrl,
+                    deploymentsUrl = repo.deploymentsUrl,
+                    createdAt = repo.createdAt,
+                    updatedAt = repo.updatedAt,
+                    pushedAt = repo.pushedAt,
+                    gitUrl = repo.gitUrl,
+                    sshUrl = repo.sshUrl,
+                    cloneUrl = repo.cloneUrl,
+                    svnUrl = repo.svnUrl,
+                    homepage = repo.homepage,
+                    size = repo.size,
+                    stargazersCount = repo.stargazersCount,
+                    watchersCount = repo.watchersCount,
+                    language = repo.language,
+                    hasIssues = repo.hasIssues,
+                    hasProjects = repo.hasProjects,
+                    hasDownloads = repo.hasDownloads,
+                    hasWiki = repo.hasWiki,
+                    hasPages = repo.hasPages,
+                    hasDiscussions = repo.hasDiscussions,
+                    forksCount = repo.forksCount,
+                    mirrorUrl = repo.mirrorUrl,
+                    archived = repo.archived,
+                    disabled = repo.disabled,
+                    openIssuesCount = repo.openIssuesCount,
+                    // TODO: Other models should have their license field's String type change to License
+                    //  type.
+//                license = repo.license,
+                    license = null,
+                    allowForking = repo.allowForking,
+                    isTemplate = repo.isTemplate,
+                    webCommitSignoffRequired = repo.webCommitSignoffRequired,
+                    topics = topics.ifEmpty { null },
+                    visibility = repo.visibility,
+                    forks = repo.forks,
+                    openIssues = repo.openIssues,
+                    watchers = repo.watchers,
+                    defaultBranch = repo.defaultBranch,
+                    permissions = permissions
+                )
+
+                reposDto.add(repoDto)
             }
-
-            val repoDto = RepoDataTransferObject.newInstance(
-                id = repo.id,
-                nodeId = repo.nodeId,
-                name = repo.name,
-                fullName = repo.fullName,
-                private = repo.private,
-                owner = owner,
-                htmlUrl = repo.htmlUrl,
-                description = repo.description,
-                fork = repo.fork,
-                url = repo.url,
-                forksUrl = repo.forksUrl,
-                keysUrl = repo.keysUrl,
-                collaboratorsUrl = repo.collaboratorsUrl,
-                teamsUrl = repo.teamsUrl,
-                hooksUrl = repo.hooksUrl,
-                issueEventsUrl = repo.issuesUrl,
-                eventsUrl = repo.eventsUrl,
-                assigneesUrl = repo.assigneesUrl,
-                branchesUrl = repo.branchesUrl,
-                tagsUrl = repo.tagsUrl,
-                blobsUrl = repo.blobsUrl,
-                gitTagsUrl = repo.gitTagsUrl,
-                gitRefsUrl = repo.gitRefsUrl,
-                treesUrl = repo.treesUrl,
-                statusesUrl = repo.statusesUrl,
-                languagesUrl = repo.languagesUrl,
-                stargazersUrl = repo.stargazersUrl,
-                contributorsUrl = repo.contributorsUrl,
-                subscribersUrl = repo.subscribersUrl,
-                subscriptionUrl = repo.subscriptionUrl,
-                commitsUrl = repo.commitsUrl,
-                gitCommitsUrl = repo.gitCommitsUrl,
-                commentsUrl = repo.commentsUrl,
-                issueCommentUrl = repo.issueCommentUrl,
-                contentsUrl = repo.contentsUrl,
-                compareUrl = repo.compareUrl,
-                mergesUrl = repo.mergesUrl,
-                archiveUrl = repo.archiveUrl,
-                downloadsUrl = repo.downloadsUrl,
-                issuesUrl = repo.issuesUrl,
-                pullsUrl = repo.pullsUrl,
-                milestonesUrl = repo.milestonesUrl,
-                notificationsUrl = repo.notificationsUrl,
-                labelsUrl = repo.labelsUrl,
-                releasesUrl = repo.releasesUrl,
-                deploymentsUrl = repo.deploymentsUrl,
-                createdAt = repo.createdAt,
-                updatedAt = repo.updatedAt,
-                pushedAt = repo.pushedAt,
-                gitUrl = repo.gitUrl,
-                sshUrl = repo.sshUrl,
-                cloneUrl = repo.cloneUrl,
-                svnUrl = repo.svnUrl,
-                homepage = repo.homepage,
-                size = repo.size,
-                stargazersCount = repo.stargazersCount,
-                watchersCount = repo.watchersCount,
-                language = repo.language,
-                hasIssues = repo.hasIssues,
-                hasProjects = repo.hasProjects,
-                hasDownloads = repo.hasDownloads,
-                hasWiki = repo.hasWiki,
-                hasPages = repo.hasPages,
-                hasDiscussions = repo.hasDiscussions,
-                forksCount = repo.forksCount,
-                mirrorUrl = repo.mirrorUrl,
-                archived = repo.archived,
-                disabled = repo.disabled,
-                openIssuesCount = repo.openIssuesCount,
-                license = repo.license,
-                allowForking = repo.allowForking,
-                isTemplate = repo.isTemplate,
-                webCommitSignoffRequired = repo.webCommitSignoffRequired,
-                topics = topics.ifEmpty { null },
-                visibility = repo.visibility,
-                forks = repo.forks,
-                openIssues = repo.openIssues,
-                watchers = repo.watchers,
-                defaultBranch = repo.defaultBranch,
-                permissions = permissions
-            )
-
-            reposDto.add(repoDto)
         }
 
         return reposDto.map {

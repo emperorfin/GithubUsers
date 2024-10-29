@@ -3,10 +3,12 @@
 
     <string name="btn_retry">Retry</string>
     <string name="heading_repos">Repos</string>
+    <string name="message_no_repos">This user has no repo.</string>
     <string name="content_description_error_message">Error message</string>
     <string name="content_description_search_leading_icon">Search Icon</string>
     <string name="label_search_users">Search users</string>
     <string name="message_no_internet_loading_cached_users">No internet connectivity. Loading saved users…</string>
+    <string name="message_no_internet_loading_cached_user_repos">No internet connectivity. Loading saved user repos…</string>
     <string name="message_no_internet_searching_cached_users">No internet connectivity. Searching saved users…</string>
     <string name="message_no_internet_connectivity">No internet connectivity.</string>
     <string name="message_enter_user_handle_name_or_text_found_in_bio">Enter a user\'s handle, name or text found in their bio.</string>

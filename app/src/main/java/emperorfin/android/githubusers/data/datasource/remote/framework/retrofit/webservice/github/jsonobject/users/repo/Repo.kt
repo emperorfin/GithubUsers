@@ -152,7 +152,7 @@ data class Repo(
     @SerializedName("open_issues_count")
     val openIssuesCount: Int?,
     @SerializedName("license")
-    val license: String?, 
+    val license: License?,
     @SerializedName("allow_forking")
     val allowForking: Boolean?,
     @SerializedName("is_template")

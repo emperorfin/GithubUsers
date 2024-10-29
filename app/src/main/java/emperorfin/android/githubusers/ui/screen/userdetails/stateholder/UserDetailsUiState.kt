@@ -1,5 +1,6 @@
 package emperorfin.android.githubusers.ui.screen.userdetails.stateholder
 
+import emperorfin.android.githubusers.ui.model.repo.RepoUiModel
 import emperorfin.android.githubusers.ui.model.user.UserUiModel
 
 
@@ -13,6 +14,7 @@ import emperorfin.android.githubusers.ui.model.user.UserUiModel
 
 data class UserDetailsUiState(
     val user: UserUiModel? = null,
+    val repos: List<RepoUiModel> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: Int? = null,
     val messageSnackBar: Int? = null,
